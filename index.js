@@ -6,7 +6,7 @@ import path from 'path';
 import { establishConnection } from './src/angel_one/src/connection.js';
 import fs from 'fs';
 
-import tokens from './src/angel_one/src/tokens.json' assert { type: 'json' };
+const tokens = JSON.parse(fs.readFileSync('./src/angel_one/src/tokens.json', 'utf-8'));
 
 dotenv.config();
 

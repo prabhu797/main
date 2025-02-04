@@ -1,7 +1,7 @@
 import { WebSocketV2 } from "smartapi-javascript";
 import { config } from "dotenv";
 import fs from 'fs';
-import tokens from './tokens.json' assert { type: 'json' };
+const tokens = JSON.parse(fs.readFileSync('./src/angel_one/src/tokens.json', 'utf-8'));
 
 config();
 
