@@ -4,3 +4,7 @@ node_modules/
 
 dist/
 build/
+
+src/angel_one/src/banknifty_files
+src/angel_one/src/nifty_files
+src/angel_one/src/sbin_files
