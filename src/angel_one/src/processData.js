@@ -18,9 +18,11 @@ if (!fs.existsSync(sbinDir)) {
 }
 
 export function scheduleExecution() {
+    console.log("Schedule Execution Started");
     const now = new Date();
     const targetTime = new Date();
     targetTime.setHours(9, 15, 0, 0);
+
 
     if (now >= targetTime) {
         fetchData();
@@ -31,9 +33,11 @@ export function scheduleExecution() {
 }
 
 function fetchData() {
+    console.log("Reached Fetching Data");
     if (tokens.is_execution_going_on) {
         console.log("Execution is already running.");
         return; // Exit if execution is already running
+
     }
 
     tokens.is_execution_going_on = true; // Set execution status to true
