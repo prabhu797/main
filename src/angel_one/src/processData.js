@@ -18,31 +18,25 @@ if (!fs.existsSync(sbinDir)) {
 }
 
 export function scheduleExecution() {
-    console.log("Schedule Execution Started");
-
     // Get the current time in IST
     const now = new Date();
     const nowIST = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
 
     // Set target time in IST
     const targetTime = new Date(nowIST);
-    targetTime.setHours(9, 15, 0, 0); // 09:15 AM IST
-
-    console.log("Now (IST)", nowIST);
-    console.log("Target Time (IST)", targetTime);
+    targetTime.setHours(9, 15, 0, 0);
 
     if (nowIST >= targetTime) {
         fetchData();
     } else {
         let executionTime = millisecondsTillGivenTime("09:15");
-        console.log("Execution Time", executionTime);
         setTimeout(fetchData, executionTime);
     }
 }
 
 
 function fetchData() {
-    console.log("Reached Fetching Data");
+    console.log("Reached Fetching Data", tokens.is_execution_going_on);
     if (tokens.is_execution_going_on) {
         console.log("Execution is already running.");
         return; // Exit if execution is already running
@@ -50,8 +44,13 @@ function fetchData() {
     }
 
     tokens.is_execution_going_on = true; // Set execution status to true
-    console.log("Saving Execution started");
-    fs.writeFileSync('./src/angel_one/src/tokens.json', JSON.stringify(tokens, null, 2)); // Update tokens.json
+    try {
+        fs.writeFileSync('./src/angel_one/src/tokens.json', JSON.stringify(tokens, null, 2)); // Update tokens.json
+        const tokensTemp = JSON.parse(fs.readFileSync('./src/angel_one/src/tokens.json', 'utf-8'));
+        console.log("Updated Tokens", tokensTemp);
+    } catch (error) {
+        console.error("Error writing tokens.json:", error);
+    }
 
     let web_socket = new WebSocketV2({
         jwttoken: tokens.jwt_token,
