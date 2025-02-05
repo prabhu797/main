@@ -17,7 +17,6 @@ export async function establishConnection(password, totp) {
 
 	try {
 		const initialData = await smart_api.generateSession(process.env.CUSTOMER_ID, password, totp);
-		console.log("Initial Data", initialData);
 
 		if (initialData.status) {
 			tokens.jwt_token = initialData.data.jwtToken;
@@ -27,7 +26,6 @@ export async function establishConnection(password, totp) {
 		}
 
 		const profileData = await smart_api.getProfile();
-		console.log("Final Data", profileData);
 
         scheduleExecution();
 
