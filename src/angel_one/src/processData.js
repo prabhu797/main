@@ -19,21 +19,27 @@ if (!fs.existsSync(sbinDir)) {
 
 export function scheduleExecution() {
     console.log("Schedule Execution Started");
-    const now = new Date();
-    const targetTime = new Date();
-    targetTime.setHours(9, 15, 0, 0);
 
-    console.log("Now", now);
-    console.log("Target Time", targetTime);
-    if (now >= targetTime) {
+    // Get the current time in IST
+    const now = new Date();
+    const nowIST = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+
+    // Set target time in IST
+    const targetTime = new Date(nowIST);
+    targetTime.setHours(9, 15, 0, 0); // 09:15 AM IST
+
+    console.log("Now (IST)", nowIST);
+    console.log("Target Time (IST)", targetTime);
+
+    if (nowIST >= targetTime) {
         fetchData();
     } else {
         let executionTime = millisecondsTillGivenTime("09:15");
         console.log("Execution Time", executionTime);
         setTimeout(fetchData, executionTime);
     }
-
 }
+
 
 function fetchData() {
     console.log("Reached Fetching Data");
@@ -135,13 +141,14 @@ function formatDate(date) {
 
 function millisecondsTillGivenTime(timeStr) {
     const now = new Date();
+    const nowIST = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
 
     let [hours, minutes] = timeStr.split(':').map(Number);
 
-    const targetTime = new Date(now);
+    const targetTime = new Date(nowIST);
     targetTime.setHours(hours, minutes, 0, 0);
 
-    const millisecondsDifference = targetTime - now;
+    const millisecondsDifference = targetTime - nowIST;
 
     return millisecondsDifference > 0 ? millisecondsDifference : 0;
 }
