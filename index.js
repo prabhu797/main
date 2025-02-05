@@ -6,8 +6,6 @@ import path from 'path';
 import { establishConnection } from './src/angel_one/src/connection.js';
 import fs from 'fs';
 
-const tokens = JSON.parse(fs.readFileSync('./src/angel_one/src/tokens.json', 'utf-8'));
-
 dotenv.config();
 
 const app = express();
@@ -41,6 +39,7 @@ app.post('/api/angel-one/submit', async (req, res) => {
 
 // Get the execution status
 app.get('/api/angel-one/is-execution-going-on', (req, res) => {
+    const tokens = JSON.parse(fs.readFileSync('./src/angel_one/src/tokens.json', 'utf-8'));
     const result = tokens.is_execution_going_on;
     res.json(result);
 });
