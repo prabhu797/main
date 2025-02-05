@@ -23,13 +23,16 @@ export function scheduleExecution() {
     const targetTime = new Date();
     targetTime.setHours(9, 15, 0, 0);
 
-
+    console.log("Now", now);
+    console.log("Target Time", targetTime);
     if (now >= targetTime) {
         fetchData();
     } else {
         let executionTime = millisecondsTillGivenTime("09:15");
+        console.log("Execution Time", executionTime);
         setTimeout(fetchData, executionTime);
     }
+
 }
 
 function fetchData() {
