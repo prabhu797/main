@@ -33,9 +33,9 @@ app.get('/api/angel-one/login', (req, res) => {
 });
 
 // Get the password and totp and establish connection
-app.post('/api/angel-one/submit', (req, res) => {
+app.post('/api/angel-one/submit', async (req, res) => {
     const { password, totp } = req.body;
-    const result = establishConnection(password, totp);
+    const result = await establishConnection(password, totp);
     res.json(result);
 });
 
