@@ -15,24 +15,17 @@ export async function establishConnection(password, totp) {
 		api_key: process.env.API_KEY,
 	});
 
-    console.log("API Key", process.env.API_KEY);
-    console.log("Customer ID", process.env.CUSTOMER_ID);
-    console.log("Password", password);
-    console.log("TOTP", totp);
-
 	try {
 		const initialData = await smart_api.generateSession(process.env.CUSTOMER_ID, password, totp);
-		console.log("Initial Data", initialData);
 
 		if (initialData.status) {
 			tokens.jwt_token = initialData.data.jwtToken;
 			tokens.refresh_token = initialData.data.refreshToken;
 			tokens.feed_token = initialData.data.feedToken;
-			fs.writeFileSync('./tokens.json', JSON.stringify(tokens, null, 2));
+			fs.writeFileSync('./src/angel_one/src/tokens.json', JSON.stringify(tokens, null, 2));
 		}
 
 		const profileData = await smart_api.getProfile();
-		console.log("Final Data", profileData);
 
         scheduleExecution();
 
