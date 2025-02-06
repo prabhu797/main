@@ -76,8 +76,7 @@ app.get('/api/angel-one/download-file', (req, res) => {
 //? Main Application
 // Basic route
 app.get('/', (req, res) => {
-    const hello = process.env.HELLO;
-    res.send(`Welcome to the Main Application! ${hello}`);
+    res.send(`Welcome to the Main Application!`);
 });
 
 //? WebSocket Connection
@@ -95,7 +94,7 @@ io.on('connection', (socket) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5500;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
